@@ -14,8 +14,10 @@ def start(message):
 
 @bot.message_handler(func=lambda message: message.text.isdigit())
 def guess_number(message):
+    global number
     if int(message.text) == number:
         bot.send_message(message.chat.id, 'Ти виграв!')
+        number = randint(1,10)
     else:
         bot.send_message(message.chat.id, 'Ти програв')
 
