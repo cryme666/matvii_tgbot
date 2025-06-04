@@ -2,6 +2,7 @@ import telebot,os
 from telebot import types
 from dotenv import load_dotenv
 from gif_search import get_gif_url 
+from img_search import get_photo_url
 
 load_dotenv()
 
@@ -34,7 +35,11 @@ def callback_query(call):
         else:
             bot.send_message(call.message.chat.id, 'No GIF found for your query.')
     elif call_data == 'img':
-        pass
+        img_url = get_photo_url(query)
+        if img_url:
+            bot.send_photo(call.message.chat.id, img_url)
+        else:
+            bot.send_message(call.message.chat.id, 'No image found for your query.')
     
     
 print("Bot is running...")    

@@ -4,8 +4,6 @@ load_dotenv()
 import requests
 
 giphy_api = os.getenv('GIPHY_API')
-key = os.getenv('KEY')
-cx = os.getenv('CX')
 def get_gif_url(query, limit=1, rating='g'):
     url = 'https://api.giphy.com/v1/gifs/search'
     params = {
@@ -15,6 +13,8 @@ def get_gif_url(query, limit=1, rating='g'):
         'rating': rating,
     }
 
+    print(giphy_api)
+
     response = requests.get(url, params=params)
     if response.status_code == 200:
         data = response.json()
@@ -22,20 +22,11 @@ def get_gif_url(query, limit=1, rating='g'):
             gif_url = data['data'][0]['images']['original']['url']
             return gif_url
         else:
-            return None
+            print("No GIFs found for your query.")
+    
     else:
+        print(f"Error: {response.status_code} - {response.text}")
         return None
-
-def get_photo_url(query):
-    url = "https://www.googleapis.com/customsearch/v1"
-    params = {
-        "key": key,
-        "cx": cx,
-        "searchType": "image",
-        "q": query,
-        "num": 1,
-        "safe": "active"
-    }
 
 def main():
     query = input("Enter a search term for GIFs: ")
